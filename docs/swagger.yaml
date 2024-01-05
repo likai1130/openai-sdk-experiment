@@ -1,0 +1,176 @@
+definitions:
+  api.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+    type: object
+  assistants.AssistantRequest:
+    properties:
+      description:
+        type: string
+      instructions:
+        type: string
+      name:
+        type: string
+    type: object
+  service.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  service.RunRequest:
+    properties:
+      assistantsId:
+        type: string
+      content:
+        type: string
+      threadId:
+        type: string
+    required:
+    - assistantsId
+    - content
+    type: object
+info:
+  contact: {}
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: 系统健康检查
+      responses:
+        "200":
+          description: '{"code": 200, "data":{"status": "ok"} }'
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: 健康检查
+      tags:
+      - 系统服务
+  /v1/assistant:
+    post:
+      consumes:
+      - application/json
+      description: 创建AI助手
+      parameters:
+      - description: 创建参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/assistants.AssistantRequest'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: 创建AI助手
+      tags:
+      - AI 助手
+  /v1/thread/run:
+    post:
+      consumes:
+      - application/json
+      description: 创建消息并且运行
+      parameters:
+      - description: 创建参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.RunRequest'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: 创建消息并且运行
+      tags:
+      - AI 助手
+  /v1/threads/{threadId}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除线程
+      parameters:
+      - description: 线程ID
+        in: path
+        name: threadId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: 删除线程
+      tags:
+      - AI 助手
+  /v1/threads/{threadId}/messages:
+    get:
+      consumes:
+      - application/json
+      description: 消息列表
+      parameters:
+      - description: 线程ID
+        in: path
+        name: threadId
+        required: true
+        type: string
+      - description: 分页单位，不能超过一页100条
+        in: query
+        name: limit
+        type: integer
+      - description: 排序，aes,desc,默认desc
+        in: query
+        name: order
+        type: string
+      - description: 传message id，某个id之后
+        in: query
+        name: after
+        type: string
+      - description: 传message id，某个id之前
+        in: query
+        name: before
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: 消息列表
+      tags:
+      - AI 助手
+  /version:
+    get:
+      consumes:
+      - application/json
+      description: 系统版本查询
+      responses:
+        "200":
+          description: '{"code": 200, "data":{"version": "latest"} }'
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: 系统版本
+      tags:
+      - 系统服务
+swagger: "2.0"

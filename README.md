@@ -75,6 +75,8 @@ https://github.com/pkoukk/tiktoken-go
 
 ![tiktoken-go.png](docs/images/tiktoken-go.png)
 
+[性能测试报告](https://github.com/pkoukk/tiktoken-go/blob/main/README_zh-hans.md)
+
 
 ## 六、遇到的问题
 
@@ -103,3 +105,11 @@ AI会总结你文档的信息重新生成描述，所以不完全一致，你试
 - [openai sdk示例代码](https://github.com/likai1130/openai-sdk-experiment)
 - [tokens计算方式](https://github.com/pkoukk/tiktoken-go#counting-tokens-for-chat-api-calls)
 - [OpenAI开发者论坛](https://community.openai.com/)
+
+## 八、使用说明
+
+### 配置环境变量
+
+```
+OPENAI_KEY = XXX
+```

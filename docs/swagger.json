@@ -1,0 +1,271 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "系统健康检查",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统服务"
+                ],
+                "summary": "健康检查",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\":{\"status\": \"ok\"} }",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/assistant": {
+            "post": {
+                "description": "创建AI助手",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI 助手"
+                ],
+                "summary": "创建AI助手",
+                "parameters": [
+                    {
+                        "description": "创建参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/assistants.AssistantRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/thread/run": {
+            "post": {
+                "description": "创建消息并且运行",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI 助手"
+                ],
+                "summary": "创建消息并且运行",
+                "parameters": [
+                    {
+                        "description": "创建参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.RunRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/threads/{threadId}": {
+            "delete": {
+                "description": "删除线程",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI 助手"
+                ],
+                "summary": "删除线程",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "线程ID",
+                        "name": "threadId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/threads/{threadId}/messages": {
+            "get": {
+                "description": "消息列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AI 助手"
+                ],
+                "summary": "消息列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "线程ID",
+                        "name": "threadId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "分页单位，不能超过一页100条",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序，aes,desc,默认desc",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "传message id，某个id之后",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "传message id，某个id之前",
+                        "name": "before",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/version": {
+            "get": {
+                "description": "系统版本查询",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统服务"
+                ],
+                "summary": "系统版本",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\":{\"version\": \"latest\"} }",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {}
+            }
+        },
+        "assistants.AssistantRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "instructions": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.RunRequest": {
+            "type": "object",
+            "required": [
+                "assistantsId",
+                "content"
+            ],
+            "properties": {
+                "assistantsId": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "threadId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
