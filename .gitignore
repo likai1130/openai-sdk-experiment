@@ -11,9 +11,8 @@
 .DS_Store
 /.DS_Store
 *.project
-*/*.iml
-*/.factorypath
-/logs
+*/data/
 */logs/
 /bin
-data
+*.log
+VERSION
