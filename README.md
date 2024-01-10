@@ -113,3 +113,8 @@ AI会总结你文档的信息重新生成描述，所以不完全一致，你试
 ```
 OPENAI_KEY = XXX
 ```
+
+## 九、视频分享地址
+- [第一部分](https://meeting.tencent.com/v2/cloud-record/share?id=f0b83709-bba5-4619-96be-446bc4774d84&from=3)
+- [第二部分](https://meeting.tencent.com/v2/cloud-record/share?id=90a41a57-254c-4cbb-a0b9-5fedb5c7483b&from=3)
+- [第三部分](https://meeting.tencent.com/v2/cloud-record/share?id=0fac7845-677f-45dd-b80d-257fbd89a3bb&from=3)
